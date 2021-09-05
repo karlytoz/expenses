@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
-import './widgets/userTransactions.dart';
 import 'package:flutter/material.dart';
+
+import './models/transaction.dart';
+import './widgets/newTransaction.dart';
+import './widgets/transactionList.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,17 +26,52 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// void startAddNewTransaction(BuildContext ctx) {
-//   showModalBottomSheet(context: ctx, builder: (bCtx) {});
-// }
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-class MyHomePage extends StatelessWidget {
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransactions = [
+    Transaction(
+        id: 't1', title: 'New Shoes', amount: 71.10, date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'Groceries', amount: 250.10, date: DateTime.now()),
+  ];
+
+  void _addNewTransaction(String title, double amount) {
+    final newTx = Transaction(
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: DateTime.now());
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (bCtx) {
+          return GestureDetector(
+            child: NewTransaction(_addNewTransaction),
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expenses'),
-        actions: <Widget>[IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => _startAddNewTransaction(context))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,14 +87,14 @@ class MyHomePage extends StatelessWidget {
                   elevation: 5,
                 ),
               ),
-              UserTransactions(),
+              TransactionList(_userTransactions),
             ]),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(CupertinoIcons.add),
-        onPressed: () {},
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
