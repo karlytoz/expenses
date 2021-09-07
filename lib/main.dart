@@ -13,14 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Personal Expenses',
       theme: ThemeData(
-          // primarySwatch: Colors.blue,
-          // // This makes the visual density adapt to the platform that you run
-          // // the app on. For desktop platforms, the controls will be smaller and
-          // // closer together (more dense) than on mobile platforms.
-          // visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+        primarySwatch: Colors.red,
+        accentColor: Colors.amber,
+        // colorScheme:ColorScheme(onPrimary: Colors.red, onSecondary: Colors.amber)
+        // // This makes the visual density adapt to the platform that you run
+        // // the app on. For desktop platforms, the controls will be smaller and
+        // // closer together (more dense) than on mobile platforms.
+        // visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: MyHomePage(),
     );
   }
@@ -66,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expenses'),
+        title: Text('Personal Expenses'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.add),
